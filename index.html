@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sushiesta · Nori, the tiny sushi that makes you stretch</title>
+  <meta name="description" content="Every 15 minutes, Nori pops up and stretches with you for 20 seconds. A tiny stretch buddy for Mac and Windows. $4.99 one-time.">
+  <meta name="theme-color" content="#FF8A5B">
+  <meta property="og:title" content="Sushiesta · the tiny stretch buddy that lives on your computer">
+  <meta property="og:description" content="Nori pops up every 15 minutes and stretches with you. Skip it and he gets SO sad. Mac + Windows, $4.99.">
+  <meta property="og:image" content="assets/icon.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="preload" href="assets/nunito.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="mascot.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
+    <div class="grains" id="grains"></div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top"><img src="assets/icon.png" alt="" width="34" height="34"><span>Sushiesta</span></a>
+    <nav class="links">
+      <a href="#demo">Try it</a>
+      <a href="#breaks">Breaks</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button class="btn small buy" data-platform="auto">Get Nori</button>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><i></i> Now on Mac &amp; Windows</span>
+        <h1>The tiny sushi that makes you <span class="wiggle">stretch</span>.</h1>
+        <p class="lede">Every 15 minutes, Nori pops up and stretches with you for 20 seconds.
+          Skip it and… well. Look at his little face.</p>
+        <div class="cta">
+          <button class="btn primary buy" data-platform="mac" id="heroMac">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.9-1.1-2.9-4.2ZM13.9 5.3c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5Z"/></svg>
+            Get Nori for Mac
+          </button>
+          <button class="btn secondary buy" data-platform="windows" id="heroWin">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.4 4.5v7H3v-6Zm0 13 7.4 1v-7H3v6Zm8.3 1.1L21 21v-8.5h-9.7v7.1Zm0-15.2v7.1H21V3l-9.7 1.4Z"/></svg>
+            Windows
+          </button>
+        </div>
+        <p class="fine"><b class="price">$4.99</b> one-time · Mac + Windows included · instant download</p>
+        <p class="fine phone-note" hidden>📱 On your phone? Buy here and we'll email the download — open it on your computer.</p>
+      </div>
+
+      <div class="hero-stage reveal" aria-label="Nori, an animated salmon nigiri, stretching">
+        <div class="spot"></div>
+        <div class="ring"></div>
+        <canvas id="heroNori"></canvas>
+        <div class="bubble" id="heroBubble">Overhead Reach</div>
+        <p class="tap-hint">tap Nori ✨</p>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span>Overhead Reach</span><b>🍣</b><span>Side Bend</span><b>🍣</b><span>20-20-20 Eye Break</span><b>🍣</b>
+        <span>Neck Release</span><b>🍣</b><span>Shoulder Rolls</span><b>🍣</b><span>Toe Touches</span><b>🍣</b>
+        <span>Chest Opener</span><b>🍣</b><span>Walk Around</span><b>🍣</b>
+        <span>Overhead Reach</span><b>🍣</b><span>Side Bend</span><b>🍣</b><span>20-20-20 Eye Break</span><b>🍣</b>
+        <span>Neck Release</span><b>🍣</b><span>Shoulder Rolls</span><b>🍣</b><span>Toe Touches</span><b>🍣</b>
+        <span>Chest Opener</span><b>🍣</b><span>Walk Around</span><b>🍣</b>
+      </div>
+    </div>
+
+    <!-- Live demo -->
+    <section class="section" id="demo">
+      <div class="section-head reveal">
+        <span class="kicker">Try it right here</span>
+        <h2>This pops up in the corner of your screen</h2>
+        <p>Go on — hit <b>Dismiss</b>. We dare you.</p>
+      </div>
+      <div class="desk reveal">
+        <div class="desk-bar"><i></i><i></i><i></i><span>Workday.swift</span></div>
+        <pre class="code" aria-hidden="true"><span class="k">struct</span> <span class="t">WorkDay</span> {
+    <span class="k">var</span> hoursAtDesk = <span class="n">9</span>
+    <span class="k">var</span> stretchesTaken = <span class="n">0</span>
+    <span class="k">var</span> posture = .<span class="f">shrimp</span>  <span class="c">// 🦐</span>
+
+    <span class="k">mutating func</span> <span class="f">grind</span>() {
+        <span class="k">while</span> <span class="k">true</span> { hoursAtDesk += <span class="n">1</span> }
+        <span class="c">// TODO: stand up (never)</span>
+    }
+}</pre>
+        <div class="popup" id="popup">
+          <div class="popup-top">
+            <div class="popup-stage"><div class="disc"></div><canvas id="demoNori"></canvas></div>
+            <div class="popup-copy">
+              <span class="pill-badge" id="demoEyebrow">Break time</span>
+              <h3 id="demoHeadline">You've been working hard. Time to take a break!</h3>
+              <span class="stretch-pill"><i></i><span id="demoStretch">Overhead Reach</span></span>
+            </div>
+          </div>
+          <div class="popup-actions">
+            <button class="ghost" id="demoDismiss">Dismiss</button>
+            <button class="ghost" id="demoSnooze">Snooze 5m</button>
+            <button class="feel" id="demoFeel" disabled>
+              <span class="fill" id="demoFill"></span>
+              <span class="label base" id="demoLabel"></span>
+              <span class="label top" id="demoLabelTop"></span>
+            </button>
+          </div>
+        </div>
+        <button class="replay" id="demoReplay" hidden>↻ Show me again</button>
+      </div>
+      <p class="demo-note reveal">The demo unlocks after 6 seconds — in the app it's 20, so you actually stretch.</p>
+    </section>
+
+    <!-- Breaks gallery -->
+    <section class="section" id="breaks">
+      <div class="section-head reveal">
+        <span class="kicker">8 breaks, in rotation</span>
+        <h2>Nori shows you every move</h2>
+        <p>Desk-friendly stretches that undo hours of hunching — no gym clothes required.</p>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Walk strip -->
+    <section class="walk-strip" id="walkStrip">
+      <p class="reveal">And sometimes he just… goes for a little walk across your screen.</p>
+      <canvas id="walkNori"></canvas>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="section-head reveal">
+        <span class="kicker">Thoughtful, not naggy</span>
+        <h2>Built to fit your workday</h2>
+      </div>
+      <div class="features">
+        <article class="feature reveal">
+          <div class="icon">🎧</div>
+          <h3>Waits out your meetings</h3>
+          <p>Mic or camera on, or a Zoom call open? Nori holds the break until you're free.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon">☕️</div>
+          <h3>Knows when you're away</h3>
+          <p>Step away for five minutes and the timer resets — that counted as a break.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon">🔥</div>
+          <h3>Streaks &amp; moods</h3>
+          <p>Keep a streak going and Nori bounces with joy. Skip a few and he gets droopy.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon">😴</div>
+          <h3>Snooze when you must</h3>
+          <p>Mid-sentence? Snooze for 5, 10 or 15 minutes. He'll be back.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon">⌨️</div>
+          <h3>Shortcuts &amp; menu bar</h3>
+          <p>Lives quietly in your menu bar or system tray, getting sleepier as a break nears.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="icon">🔒</div>
+          <h3>Private by design</h3>
+          <p>No account, no tracking, no cloud. Everything stays on your computer.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section" id="pricing">
+      <div class="price-card reveal">
+        <canvas id="priceNori"></canvas>
+        <span class="kicker">One price. Both computers.</span>
+        <div class="big-price"><span class="price">$4.99</span><small>one-time</small></div>
+        <ul>
+          <li>Mac <em>and</em> Windows versions included</li>
+          <li>All 8 breaks, streaks, moods &amp; meeting detection</li>
+          <li>Free updates</li>
+          <li>No subscription, no account</li>
+        </ul>
+        <div class="cta stacked">
+          <button class="btn primary buy" data-platform="mac">Get Nori for Mac</button>
+          <button class="btn primary buy" data-platform="windows">Get Nori for Windows</button>
+        </div>
+        <p class="fine">Secure checkout by Lemon Squeezy · Download link emailed instantly</p>
+        <p class="fine phone-note" hidden>On your phone? That's fine — buy now, then open the email on your computer to download.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-head reveal"><span class="kicker">Questions</span><h2>Good to know</h2></div>
+      <div class="faq">
+        <details class="reveal">
+          <summary>Which computers does Nori run on?</summary>
+          <p>Macs running macOS 14 (Sonoma) or newer — Apple Silicon and Intel — and Windows 10 or 11 PCs. One purchase includes both.</p>
+        </details>
+        <details class="reveal">
+          <summary>My computer showed a security warning when I opened it.</summary>
+          <p><b>Mac:</b> double-click Sushiesta, close the warning, then go to System Settings → Privacy &amp; Security and click <b>Open Anyway</b>.<br>
+          <b>Windows:</b> on the "Windows protected your PC" screen, click <b>More info → Run anyway</b>.<br>
+          You only need to do this once.</p>
+        </details>
+        <details class="reveal">
+          <summary>Is this a subscription?</summary>
+          <p>Nope. Pay once, keep Nori forever, with free updates.</p>
+        </details>
+        <details class="reveal">
+          <summary>I bought it on my phone — how do I get it on my computer?</summary>
+          <p>Your receipt email has download links for both Mac and Windows. Open that email on your computer and download the version you need.</p>
+        </details>
+        <details class="reveal">
+          <summary>Lost your download link?</summary>
+          <p>Find every purchase at <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener">Lemon Squeezy → My Orders</a> using the email you bought with.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does Nori collect any data?</summary>
+          <p>No. Your settings and stretch history never leave your computer. Nori only checks whether your mic or camera is in use, so he doesn't interrupt meetings — he never listens or watches.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final reveal">
+      <h2>Your back called.<br>It wants Nori.</h2>
+      <button class="btn primary big buy" data-platform="auto">Get Nori · <span class="price">$4.99</span></button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Sushiesta</span>
+    <span>Made with 🍣 and good posture</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
