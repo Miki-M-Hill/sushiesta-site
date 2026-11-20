@@ -36,8 +36,12 @@
     if (!reduceMotion) requestAnimationFrame(loop);
   }
 
+  // Nori's arms and sparkles reach up to ~7% outside his box, so every Nori canvas is
+  // 12% larger on each side than the spot he stands in (see .nori in styles.css) and he's
+  // drawn in the middle — he can never be clipped.
+  const PAD = 0.12;
   const drawSquare = (ctx, w, h, pose, t) => {
-    const size = Math.min(w, h);
+    const size = Math.min(w, h) / (1 + 2 * PAD);
     Nori.draw(ctx, pose, t, (w - size) / 2, (h - size) / 2, size, size);
   };
 
@@ -191,7 +195,8 @@
       const k = (t % crossing) / crossing;
       const x = -size + (w + 2 * size) * k;
       const pose = Nori.makePose(state, Nori.Walk.out + Nori.Walk.turn + 0.3 + (t % 4.4));
-      Nori.draw(ctx, pose, t, x - size / 2, 0, size, size);
+      const body = size / (1 + 2 * PAD);   // leave headroom for arms swinging up
+      Nori.draw(ctx, pose, t, x - body / 2, size - body, body, body);
     });
   }
 

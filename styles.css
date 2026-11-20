@@ -108,7 +108,11 @@ h1 { margin: 18px 0 16px; font-size: clamp(42px, 6.2vw, 72px); line-height: 1.02
   box-shadow: inset 0 0 0 7px rgba(255, 255, 255, 0.9), 0 24px 50px rgba(239, 119, 72, 0.3);
 }
 @keyframes breathe { 50% { transform: scale(1.06); opacity: 0.85; } }
-.hero-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-stage canvas { position: absolute; }
+/* Nori canvases overhang their spot by 12% on every side so poses are never clipped. */
+.hero-stage canvas, .popup-stage canvas, .tile canvas {
+  left: -12%; top: -12%; width: 124%; height: 124%; pointer-events: none;
+}
 .bubble {
   position: absolute; right: 2%; top: 12%; padding: 10px 16px; border-radius: 18px 18px 18px 4px;
   background: var(--card); box-shadow: var(--shadow); font-weight: 900; font-size: 15px; color: var(--accent-deep);
@@ -152,10 +156,10 @@ h2 { margin: 10px 0 12px; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08
 }
 .popup.in { transform: none; }
 .popup.out { opacity: 0; transform: translateY(14px); }
-.popup-top { flex: 1; display: flex; align-items: center; gap: 10px; min-height: 0; }
+.popup-top { flex: 1; display: flex; align-items: center; gap: 10px; min-height: 0; padding-left: 8px; }
 .popup-stage { position: relative; height: 100%; aspect-ratio: 1; max-height: 210px; flex: none; }
 .popup-stage .disc { position: absolute; left: 7%; top: 11%; width: 86%; height: 86%; border-radius: 50%; background: linear-gradient(var(--peach), rgba(255, 154, 107, 0.85)); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.9); }
-.popup-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.popup-stage canvas { position: absolute; }
 .popup-copy { display: flex; flex-direction: column; align-items: flex-start; }
 .pill-badge { font-size: 10px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: #fff; padding: 4px 9px; border-radius: 999px; background: var(--gradient); margin-bottom: 9px; }
 .popup-copy h3 { margin: 0 0 11px; font-size: 19px; line-height: 1.2; font-weight: 1000; }
@@ -184,7 +188,7 @@ h2 { margin: 10px 0 12px; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08
 .tile:hover { transform: translateY(-6px) rotate(-1deg); }
 .tile .stage { position: relative; aspect-ratio: 1; }
 .tile .stage::before { content: ""; position: absolute; left: 14%; top: 18%; width: 72%; height: 72%; border-radius: 50%; background: linear-gradient(#FFEDE4, var(--blush)); }
-.tile canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tile canvas { position: absolute; }
 .tile h3 { margin: 6px 0 4px; font-size: 17px; font-weight: 1000; }
 .tile p { margin: 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
 .tile .num { position: absolute; top: 12px; left: 12px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--gradient); color: #fff; font-size: 12px; font-weight: 900; }
@@ -192,7 +196,7 @@ h2 { margin: 10px 0 12px; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08
 /* ---------- Walk strip ---------- */
 .walk-strip { position: relative; margin-top: 110px; height: 300px; background: linear-gradient(transparent, rgba(255, 211, 191, 0.5) 75%, transparent); overflow: hidden; }
 .walk-strip p { position: relative; z-index: 1; text-align: center; margin: 0; padding: 0 20px; font-size: clamp(22px, 3vw, 30px); font-weight: 1000; }
-.walk-strip canvas { position: absolute; left: 0; bottom: 0; width: 100%; height: 230px; }
+.walk-strip canvas { position: absolute; left: 0; bottom: 0; width: 100%; height: 270px; }
 
 /* ---------- Features ---------- */
 .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -206,7 +210,7 @@ h2 { margin: 10px 0 12px; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.08
   position: relative; max-width: 520px; margin: 0 auto; padding: 150px 34px 34px; border-radius: 36px; text-align: center;
   background: linear-gradient(160deg, #FFFFFF, #FFF1EA); box-shadow: 0 30px 80px rgba(194, 86, 45, 0.22), inset 0 0 0 2px #fff;
 }
-.price-card canvas { position: absolute; left: 50%; top: -110px; width: 250px; height: 250px; transform: translateX(-50%); }
+.price-card canvas { position: absolute; left: 50%; top: -140px; width: 310px; height: 310px; transform: translateX(-50%); pointer-events: none; }
 .big-price { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin: 8px 0 18px; }
 .big-price .price { font-size: 72px; font-weight: 1000; letter-spacing: -2px; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .big-price small { font-size: 17px; font-weight: 800; color: var(--ink-3); }
@@ -265,7 +269,7 @@ details p { margin: 0 0 20px; color: var(--ink-2); line-height: 1.6; }
   .price-card { padding: 130px 22px 28px; }
   .bubble { font-size: 13px; }
   .walk-strip { height: 240px; }
-  .walk-strip canvas { height: 170px; }
+  .walk-strip canvas { height: 200px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
