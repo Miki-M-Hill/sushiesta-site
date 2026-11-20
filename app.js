@@ -273,16 +273,19 @@
       win.parentNode.insertBefore(win, mac);
     }
 
-    const ready = () => window.LemonSqueezy && typeof window.LemonSqueezy.Url?.Open === 'function';
-    const setUpLemon = () => {
-      if (typeof window.createLemonSqueezy === 'function') window.createLemonSqueezy();
-      window.LemonSqueezy?.Setup?.({
-        eventHandler: (event) => {
-          if (event?.event === 'Checkout.Success') location.href = 'thanks.html';
-        },
-      });
+    // Polar's embedded checkout opens over the page; after payment we show install steps.
+    const openCheckout = async () => {
+      if (!window.Polar?.EmbedCheckout) { location.href = config.checkoutUrl; return; }
+      try {
+        const checkout = await window.Polar.EmbedCheckout.create(config.checkoutUrl, { theme: 'light' });
+        checkout.addEventListener('success', (event) => {
+          event.preventDefault();
+          location.href = 'thanks.html';
+        });
+      } catch {
+        location.href = config.checkoutUrl;   // e.g. embedding not allowed yet — use the hosted page
+      }
     };
-    addEventListener('load', setUpLemon);
 
     document.querySelectorAll('.buy').forEach((button) => {
       button.addEventListener('click', () => {
@@ -290,12 +293,7 @@
           toast('Checkout opens very soon — Nori is putting on his apron 🍣');
           return;
         }
-        const chosen = button.dataset.platform === 'auto' ? platform : button.dataset.platform;
-        const url = new URL(config.checkoutUrl);
-        url.searchParams.set('embed', '1');
-        url.searchParams.set('checkout[custom][platform]', chosen);
-        if (ready()) window.LemonSqueezy.Url.Open(url.toString());
-        else location.href = url.toString().replace('embed=1', 'embed=0');
+        openCheckout();
       });
     });
   }
