@@ -12,22 +12,32 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/icon.png">
   <link rel="preload" href="assets/nunito.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <script>
-    // Always open on the hero: don't let the browser restore an old scroll position
-    // (iOS Safari does this when you reopen or reload the page).
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    if (!location.hash) {
-      const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    // Always open on the hero. iOS Safari can restore an old scroll position (sometimes
+    // after the page has loaded) or reopen a saved "#section" address, so: drop any hash,
+    // and keep pinning the page to the top for its first moments unless the visitor scrolls.
+    (function () {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+      var touched = false;
+      var stop = function () { touched = true; };
+      ['touchstart', 'wheel', 'keydown', 'mousedown'].forEach(function (t) {
+        addEventListener(t, stop, { passive: true, once: true });
+      });
+      var toTop = function () { if (!touched) window.scrollTo(0, 0); };
       toTop();
       addEventListener('DOMContentLoaded', toTop);
-      addEventListener('load', toTop);
-      addEventListener('pageshow', (e) => { if (e.persisted) toTop(); });
-    }
+      addEventListener('load', function () {
+        toTop();
+        [50, 150, 300, 600, 1000].forEach(function (ms) { setTimeout(toTop, ms); });
+      });
+      addEventListener('pageshow', function (e) { if (e.persisted) { touched = false; toTop(); } });
+    })();
   </script>
-  <script src="config.js"></script>
-  <script src="mascot.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="config.js?v=3"></script>
+  <script src="mascot.js?v=3" defer></script>
+  <script src="app.js?v=3" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.6.0/dist/embed.global.js" defer></script>
 </head>
 <body>
