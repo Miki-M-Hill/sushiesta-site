@@ -23,7 +23,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; overflow-anchor: none; }
+/* Smooth scrolling only for in-page link jumps, so the load-time "back to top" is instant. */
+html.smooth { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: "Nunito", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;

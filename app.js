@@ -309,6 +309,7 @@
     setUpWalk();
     setUpPriceNori();
     requestAnimationFrame(loop);
+    addEventListener('load', () => document.documentElement.classList.add('smooth'));
     if (reduceMotion) setTimeout(() => { loop(); }, 100);
   });
 })();
