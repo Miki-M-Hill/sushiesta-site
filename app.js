@@ -275,15 +275,28 @@
 
     // Polar's embedded checkout opens over the page; after payment we show install steps.
     const openCheckout = async () => {
-      if (!window.Polar?.EmbedCheckout) { location.href = config.checkoutUrl; return; }
+      const hosted = () => { location.href = config.checkoutUrl; };
+      if (!window.Polar?.EmbedCheckout) { hosted(); return; }
+      // If Polar won't load inside the page (e.g. this site isn't on its embedding allow-list),
+      // clear the half-open overlay after a few seconds and go to Polar's own checkout page.
+      const before = new Set(document.body.children);
+      const timeout = new Promise((resolve) => setTimeout(() => resolve(null), 5000));
       try {
-        const checkout = await window.Polar.EmbedCheckout.create(config.checkoutUrl, { theme: 'light' });
+        const checkout = await Promise.race([
+          window.Polar.EmbedCheckout.create(config.checkoutUrl, { theme: 'light' }),
+          timeout,
+        ]);
+        if (!checkout) {
+          [...document.body.children].forEach((el) => { if (!before.has(el)) el.remove(); });
+          hosted();
+          return;
+        }
         checkout.addEventListener('success', (event) => {
           event.preventDefault();
           location.href = 'thanks.html';
         });
       } catch {
-        location.href = config.checkoutUrl;   // e.g. embedding not allowed yet — use the hosted page
+        hosted();
       }
     };
 
