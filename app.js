@@ -302,6 +302,9 @@
 
     document.querySelectorAll('.buy').forEach((button) => {
       button.addEventListener('click', () => {
+        // Count Buy clicks in GoatCounter (as an event, so it doesn't inflate page views).
+        const os = /win/i.test(button.textContent) ? 'windows' : 'mac';
+        window.goatcounter?.count?.({ path: `buy-click-${os}`, title: `Buy clicked (${os})`, event: true });
         if (!config.checkoutUrl) {
           toast('Checkout opens very soon — Nori is putting on his apron 🍣');
           return;
